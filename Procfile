@@ -1,2 +1,2 @@
-release: npm run prod:db:import && npm run db:import
+release: npm run prod:db:import
 web: npm start
