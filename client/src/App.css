@@ -1,10 +1,54 @@
-.subHeader {
+* {
+  box-sizing: border-box;
+}
+
+.layout-center {
   margin: 0 auto;
   width: 800px;
-  height: 80px;
 }
 
 .app-name {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Merriweather, serif;
+}
+
+.text-merriweather {
+  font-family: Merriweather, serif;
+}
+
+.text-opensans {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.input-container {
+  margin-top: 50%;
+}
+
+html {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+#root {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.search-results {
+  height: 200px;
+}
+
+.med-info {
+  font-family: Merriweather, serif;
 }

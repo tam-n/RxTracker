@@ -5,6 +5,7 @@ module.exports = {
     colors: {
       'rust-gray': '#47585C',
       'light-gray-cloud': '#D4DCDA',
+      'willow-gray': '#C8D5BB',
     },
     extend: {},
   },
