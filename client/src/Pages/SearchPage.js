@@ -1,6 +1,6 @@
 import Searchable from '../Searchable';
 
-export default function SearchPage() {
+export default function SearchPage({ handleClick }) {
   return (
     <div className="app flex-column w-full justify-center items-center">
       <div className="flex justify-center w-full">

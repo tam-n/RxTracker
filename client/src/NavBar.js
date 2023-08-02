@@ -4,6 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import './App.css';
 import { faPills } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 const navigation = [
   { name: 'My List', href: '#', current: false },
@@ -35,11 +36,13 @@ export default function Example() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <FontAwesomeIcon
-                    icon={faPills}
-                    size="2xl"
-                    className="text-rust-gray"
-                  />
+                  <Link to="/">
+                    <FontAwesomeIcon
+                      icon={faPills}
+                      size="2xl"
+                      className="text-rust-gray"
+                    />
+                  </Link>
                   <h1 className="app-name ml-5 text-rust-gray">RxTracker</h1>
                 </div>
               </div>

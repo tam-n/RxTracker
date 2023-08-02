@@ -5,7 +5,6 @@
 .layout-center {
   margin: 0 auto;
   width: 800px;
-  height: 80px;
 }
 
 .app-name {
@@ -17,6 +16,14 @@ h1,
 h2,
 h3 {
   font-family: Merriweather, serif;
+}
+
+.text-merriweather {
+  font-family: Merriweather, serif;
+}
+
+.text-opensans {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .input-container {
@@ -40,4 +47,8 @@ body {
 
 .search-results {
   height: 200px;
+}
+
+.med-info {
+  font-family: Merriweather, serif;
 }
