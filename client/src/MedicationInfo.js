@@ -2,35 +2,60 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
 import { DataContext } from './App';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function MedicationInfo() {
-  const { selected } = useContext(DataContext);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchLists() {
-      try {
-        const response = await fetch('/api/lists');
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-      } catch (error) {
-        setError(error);
-      }
-    }
-    fetchLists();
-  }, []);
+  const data = useContext(DataContext);
+  const { selected } = data;
+  const [dosage, setDosage] = useState('');
+  const [route, setRoute] = useState('');
+  const [frequency, setFrequency] = useState('');
+  const [selectedList, setSelectedList] = useState('');
 
   if (!selected) {
     return <div>No medication selected</div>;
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    event.target.reset();
-  }
 
+    try {
+      const listId = data.lists.find(
+        (list) => list.name === selectedList
+      ).listId;
+
+      const medicationInfo = {
+        medicationId: selected.id,
+        genericName: selected.openfda.generic_name[0],
+        dosage: dosage,
+        route: route,
+        frequency: frequency,
+        listId: listId,
+      };
+
+      const response = await fetch(`/api/listContent/${listId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(medicationInfo),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.status}`);
+      }
+
+      const entry = await response.json();
+      console.log('New entry added:', entry);
+
+      setDosage('');
+      setRoute('');
+      setFrequency('');
+      setSelectedList('');
+    } catch (error) {
+      console.log('Error:', error.message);
+    }
+  }
   return (
     <div className="bg-willow-gray layout-center text-rust-gray">
       <div className="flex justify-between p-10">
@@ -38,24 +63,44 @@ export default function MedicationInfo() {
           {selected.openfda.generic_name[0].toLowerCase()}
         </span>
         <form onSubmit={handleSubmit}>
-          <span className="text-opensans justify-end flex items-center">
-            <select className="rounded-md p-1 w-1/5" placeholder="Route">
-              <option value="" disabled selected hidden>
+          <span className="text-opensans justify-end flex items-center text-sm">
+            <input
+              className="rounded-md p-1 w-20 mx-1"
+              placeholder="Dosage..."
+              value={dosage}
+              onChange={(e) => setDosage(e.target.value)}
+            />
+            <select
+              className="rounded-md p-1 w-20 mx-1"
+              value={route}
+              onChange={(e) => setRoute(e.target.value)}>
+              <option value="" disabled hidden>
                 Route
               </option>
-              {selected.openfda.route.map((route) => {
-                return <option>{route}</option>;
-              })}
+              {selected.openfda.route.map((route) => (
+                <option key={route}>{route}</option>
+              ))}
             </select>
             <input
-              className="m-3 rounded-md p-1 w-1/5"
-              placeholder="Dosage..."></input>
-            <select>
-              <option value="" disabled selected hidden>
+              placeholder="Frequency"
+              className="rounded-md p-1 w-20 mx-1"
+              value={frequency}
+              onChange={(e) => setFrequency(e.target.value)}
+            />
+            <select
+              className="rounded-md p-1 w-20 mx-1"
+              value={selectedList}
+              onChange={(e) => setSelectedList(e.target.value)}>
+              <option value="" disabled hidden>
                 List
               </option>
-              <option>Hi</option>
+              {data.lists.map((list) => (
+                <option key={list.listId}>{list.name}</option>
+              ))}
             </select>
+            <button type="submit">
+              <FontAwesomeIcon icon={faSquarePlus} size="2xl" />
+            </button>
           </span>
         </form>
       </div>
