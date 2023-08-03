@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { ClientError } from './client-error.js';
+import ClientError from './client-error.js';
 
 export function authorizationMiddleware(req, res, next) {
   // The token will be in the Authorization header with the format `Bearer ${token}`
