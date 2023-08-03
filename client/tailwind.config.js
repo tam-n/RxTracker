@@ -6,6 +6,7 @@ module.exports = {
       'rust-gray': '#47585C',
       'light-gray-cloud': '#D4DCDA',
       'willow-gray': '#C8D5BB',
+      'minato-village-gray': '#80989B',
     },
     extend: {},
   },
