@@ -20,9 +20,7 @@ export default function MedicationInfo() {
     event.preventDefault();
 
     try {
-      const listId = data.lists.find(
-        (list) => list.name === selectedList
-      ).listId;
+      const listId = selectedList;
 
       const medicationInfo = {
         medicationId: selected.id,
@@ -95,7 +93,9 @@ export default function MedicationInfo() {
                 List
               </option>
               {data.lists.map((list) => (
-                <option key={list.listId}>{list.name}</option>
+                <option key={list.listId} value={list.listId}>
+                  {list.name}
+                </option>
               ))}
             </select>
             <button type="submit">

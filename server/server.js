@@ -104,11 +104,12 @@ app.get('/api/listContent/:listId', async (req, res, next) => {
       SELECT *
         FROM "listContent"
         JOIN "lists" USING ("listId")
-        WHERE "listId" = $1 AND "userId" = $2
+        WHERE "listId" = $1
         order by "listContentId" desc;
     `;
     const params = [listId];
     const result = await db.query(sql, params);
+    console.log(result.rows);
     res.status(201).json(result.rows);
   } catch (err) {
     next(err);

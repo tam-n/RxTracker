@@ -52,3 +52,7 @@ body {
 .med-info {
   font-family: Merriweather, serif;
 }
+
+.content {
+  padding-top: 80px;
+}

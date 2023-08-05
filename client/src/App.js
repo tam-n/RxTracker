@@ -6,6 +6,7 @@ import InfoPage from './Pages/InfoPage';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import DrawerComponent from './DrawerComponent';
+import ListPage from './Pages/ListPage';
 
 export const DataContext = React.createContext();
 
@@ -52,11 +53,14 @@ function App() {
     <div>
       <DataContext.Provider value={data}>
         <NavBar />
-        <Routes>
-          <Route path="/" element={<SearchPage />} />
-          <Route path="info" element={<InfoPage />} />
-        </Routes>
         <DrawerComponent />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<SearchPage />} />
+            <Route path="info" element={<InfoPage />} />
+            <Route path="mylist" element={<ListPage />} />
+          </Routes>
+        </div>
       </DataContext.Provider>
     </div>
   );

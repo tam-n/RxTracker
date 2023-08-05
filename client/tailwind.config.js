@@ -7,6 +7,7 @@ module.exports = {
       'light-gray-cloud': '#D4DCDA',
       'willow-gray': '#C8D5BB',
       'minato-village-gray': '#80989B',
+      white: '#FFFFFF',
     },
     extend: {},
   },

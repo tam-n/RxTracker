@@ -51,21 +51,23 @@ export default function DrawerComponent() {
 
   return (
     <>
-      <button onClick={() => data.setIsOpen(true)}>
+      <button
+        className="fixed left-5 top-1/2"
+        onClick={() => data.setIsOpen(true)}>
         {data.isOpen === false ? (
           <FontAwesomeIcon icon={faChevronRight} size="2xl" />
         ) : null}
       </button>
       <main
         className={
-          'fixed overflow-hidden z-10 bg-gray-900 inset-0 transform ease-in-out ' +
+          'fixed overflow-hidden bg-gray-900 inset-0 transform ease-in-out ' +
           (data.isOpen
             ? 'transition-opacity opacity-100 duration-500 translate-x-0'
             : 'transition-all delay-500 opacity-0 -translate-x-full')
         }>
         <section
           className={
-            'w-screen max-w-xs left-0 top-16 absolute bg-minato-village-gray h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform ' +
+            'w-screen max-w-xs left-0 top-20 absolute bg-minato-village-gray h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform ' +
             (data.isOpen ? 'translate-x-0' : '-translate-x-full')
           }>
           <article className="relative w-screen max-w-xs pb-10 flex flex-col space-y-6 overflow-y-scroll h-full">
@@ -94,7 +96,11 @@ export default function DrawerComponent() {
             {data.lists
               ? data.lists.map((list) => {
                   return (
-                    <ListDropDown listName={list.name} key={list.listId} />
+                    <ListDropDown
+                      listName={list.name}
+                      listId={list.listId}
+                      key={list.listId}
+                    />
                   );
                 })
               : null}
