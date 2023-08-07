@@ -10,7 +10,7 @@ export default function Searchable() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const { selected, setSelected } = useContext(DataContext);
+  const { setSelected } = useContext(DataContext);
 
   const fetchData = async (value) => {
     try {

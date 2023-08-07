@@ -1,101 +1,53 @@
-import { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import './App.css';
-import { faPills } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPills } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { Disclosure } from '@headlessui/react';
 
-const navigation = [
-  { name: 'My List', href: '#', current: false },
-  { name: 'My Account', href: '#', current: false },
-  { name: 'Log out', href: '#', current: false },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
-
-export default function Example() {
+export default function Navbar({ fixed }) {
+  const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
-    <Disclosure as="nav" className="bg-light-gray-cloud text-rust-gray">
-      {({ open }) => (
-        <div className="layout-center bg-light-gray-cloud">
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
+    <>
+      <Disclosure
+        as="nav"
+        className="fixed w-screen top-0 flex items-center justify-between px-2 py-3 bg-light-gray-cloud text-merriweather text-rust-gray">
+        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between layout-center">
+          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <Link to="/">
+              <div className="font-bold leading-relaxed mr-4 py-2 text-rust-gray text-xl flex items-center justify-center">
+                <FontAwesomeIcon icon={faPills} size="2xl" />
+                <span className="mx-3">RxTracker</span>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <Link to="/">
-                    <FontAwesomeIcon
-                      icon={faPills}
-                      size="2xl"
-                      className="text-rust-gray"
-                    />
-                  </Link>
-                  <h1 className="app-name ml-5 text-rust-gray">RxTracker</h1>
-                </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}>
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
+            </Link>
+            <button
+              className="cursor-pointer text-xl leading-none px-3 py-1 rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              type="button"
+              onClick={() => setNavbarOpen(!navbarOpen)}>
+              <FontAwesomeIcon icon={faBars} />
+            </button>
           </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-gray-900 text-rust-gray'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}>
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
+          <div
+            className={
+              'lg:flex flex-grow items-center justify-end' +
+              (navbarOpen ? ' flex' : ' hidden')
+            }
+            id="example-navbar-danger">
+            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto text-merriweather">
+              <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
+                <Link to="/mylist">
+                  <span className="ml-2 text-base">My Lists</span>
+                </Link>
+              </li>
+              <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
+                <Link to="">
+                  <span className="ml-2 text-base">Login</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      )}
-    </Disclosure>
+      </Disclosure>
+    </>
   );
 }
