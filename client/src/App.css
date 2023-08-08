@@ -30,21 +30,6 @@ h3 {
   margin-top: 50%;
 }
 
-html {
-  min-height: 100vh;
-  min-width: 100vw;
-}
-
-body {
-  min-height: 100vh;
-  min-width: 100vw;
-}
-
-#root {
-  min-height: 100vh;
-  min-width: 100vw;
-}
-
 .search-results {
   height: 200px;
 }

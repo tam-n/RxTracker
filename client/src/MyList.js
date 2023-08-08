@@ -10,7 +10,11 @@ export default function MyList() {
       {data.lists
         ? data.lists.map((list) => {
             return (
-              <ListTableDropDown listName={list.name} listId={list.listId} />
+              <ListTableDropDown
+                key={list.listId}
+                listName={list.name}
+                listId={list.listId}
+              />
             );
           })
         : null}

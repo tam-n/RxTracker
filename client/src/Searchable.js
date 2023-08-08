@@ -69,7 +69,7 @@ export default function Searchable() {
                   <li
                     key={result.openfda.product_ndc[1]}
                     onClick={() => setSelected(result)}
-                    className="hover:bg-light-gray-sky">
+                    className="hover:bg-light-gray-sky truncate w-2/3 sm:w-1/3">
                     {result.openfda.generic_name} - {result.openfda.brand_name}{' '}
                     ({result.openfda.manufacturer_name})
                   </li>

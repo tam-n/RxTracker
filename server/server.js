@@ -183,34 +183,31 @@ app.post('/api/list', async (req, res, next) => {
 });
 
 // Update meds in a list
-app.put(
-  '/api/listContent/:listContentId',
-  authorizationMiddleware,
-  async (req, res, next) => {
-    try {
-      const listContentId = Number(req.params.listContentId);
-      if (!Number.isInteger(listContentId || listContentId < 1)) {
-        throw new ClientError(400, 'listContentId must be a positve integer.');
-      }
+app.put('/api/listContent/:listContentId', async (req, res, next) => {
+  try {
+    const listContentId = Number(req.params.listContentId);
+    if (!Number.isInteger(listContentId || listContentId < 1)) {
+      throw new ClientError(400, 'listContentId must be a positve integer.');
+    }
 
-      const { medicationId, genericName, dosage, route, frequency, listId } =
-        req.body;
-      if (
-        !listContentId ||
-        !medicationId ||
-        !genericName ||
-        !dosage ||
-        !route ||
-        !frequency ||
-        !listId
-      ) {
-        throw new ClientError(
-          400,
-          'listContentId, medicationId, genericName, dosage, route, frequency, and listId are required fields'
-        );
-      }
+    const { medicationId, genericName, dosage, route, frequency, listId } =
+      req.body;
+    if (
+      !listContentId ||
+      !medicationId ||
+      !genericName ||
+      !dosage ||
+      !route ||
+      !frequency ||
+      !listId
+    ) {
+      throw new ClientError(
+        400,
+        'listContentId, medicationId, genericName, dosage, route, frequency, and listId are required fields'
+      );
+    }
 
-      const sql = `
+    const sql = `
       UPDATE "listContent"
         SET "medicationId" = $1,
             "genericName" = $2,
@@ -220,29 +217,28 @@ app.put(
         WHERE "listContentId" = $6 AND "listId" = $7
         RETURNING *;
     `;
-      const params = [
-        medicationId,
-        genericName,
-        dosage,
-        route,
-        frequency,
-        listContentId,
-        listId,
-      ];
-      const result = await db.query(sql, params);
-      const [listContent] = result.rows;
-      if (!listContent) {
-        throw new ClientError(
-          404,
-          `List content with id ${listContentId} not found`
-        );
-      }
-      res.status(201).json(listContent);
-    } catch (err) {
-      next(err);
+    const params = [
+      medicationId,
+      genericName,
+      dosage,
+      route,
+      frequency,
+      listContentId,
+      listId,
+    ];
+    const result = await db.query(sql, params);
+    const [listContent] = result.rows;
+    if (!listContent) {
+      throw new ClientError(
+        404,
+        `List content with id ${listContentId} not found`
+      );
     }
+    res.status(201).json(listContent);
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 // Update list name
 app.put(

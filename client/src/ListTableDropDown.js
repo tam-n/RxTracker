@@ -3,7 +3,7 @@ import ListTable from './ListTable';
 
 export default function ListTableDropDown({ listName, listId }) {
   return (
-    <div>
+    <div className="px-10 sm:px-20">
       <Disclosure>
         <Disclosure.Button className="py-2 w-full">
           {listName}
