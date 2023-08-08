@@ -65,11 +65,11 @@ export default function Searchable() {
           <ul className="results flex-column justify-center items-center">
             {searchResults.map((result) =>
               result.openfda.generic_name ? (
-                <Link to="/info">
+                <Link to="/info" key={result.id}>
                   <li
                     key={result.openfda.product_ndc[1]}
                     onClick={() => setSelected(result)}
-                    className="hover:bg-light-gray-sky">
+                    className="hover:bg-light-gray-sky truncate">
                     {result.openfda.generic_name} - {result.openfda.brand_name}{' '}
                     ({result.openfda.manufacturer_name})
                   </li>
