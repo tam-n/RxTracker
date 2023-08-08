@@ -35,7 +35,6 @@ export default function ListTable({ listId }) {
       const updatedContents = [...listContents];
       updatedContents[row][column] = editedValue;
       const selectedRow = updatedContents[row];
-      console.log(selectedRow);
 
       const body = {
         medicationId: selectedRow.medicationId,

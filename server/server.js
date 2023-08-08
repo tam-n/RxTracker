@@ -85,6 +85,7 @@ app.get('/api/lists', async (req, res, next) => {
     const sql = `
       SELECT *
         FROM "lists"
+        ORDER BY "listId" ASC
     `;
     const result = await db.query(sql);
     res.status(201).json(result.rows);
@@ -241,34 +242,30 @@ app.put('/api/listContent/:listContentId', async (req, res, next) => {
 });
 
 // Update list name
-app.put(
-  '/api/lists/:listId',
-  authorizationMiddleware,
-  async (req, res, next) => {
-    try {
-      const listId = Number(req.params.listId);
-      const { name } = req.body;
-      if (!Number.isInteger(listId) || !name) {
-        throw new ClientError(400, 'listId and name are required fields');
-      }
-      const sql = `
+app.put('/api/lists/:listId', async (req, res, next) => {
+  try {
+    const listId = Number(req.params.listId);
+    const { name } = req.body;
+    if (!Number.isInteger(listId) || !name) {
+      throw new ClientError(400, 'listId and name are required fields');
+    }
+    const sql = `
       UPDATE "lists"
         SET "name" = $1
-        WHERE "listId" = $2 AND "userId" = $3
+        WHERE "listId" = $2
         RETURNING *;
     `;
-      const params = [name, listId, req.user.userId];
-      const result = await db.query(sql, params);
-      const [list] = result.rows;
-      if (!list) {
-        throw new ClientError(404, `List with id ${listId} not found`);
-      }
-      res.status(201).json(list);
-    } catch (err) {
-      next(err);
+    const params = [name, listId];
+    const result = await db.query(sql, params);
+    const [list] = result.rows;
+    if (!list) {
+      throw new ClientError(404, `List with id ${listId} not found`);
     }
+    res.status(201).json(list);
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 // Delete a medication from list
 app.delete(
