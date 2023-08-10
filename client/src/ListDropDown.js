@@ -3,29 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { faFileLines } from '@fortawesome/free-solid-svg-icons';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState, useContext } from 'react';
-import { DataContext } from './App';
+import useFetchContents from './UseFetchContents';
+import { useState } from 'react';
 
 export default function ListDropDown({ listName, listId }) {
-  const [listContents, setListContents] = useState([]);
-  const data = useContext(DataContext);
-
-  useEffect(() => {
-    async function fetchListContent() {
-      try {
-        const response = await fetch(`/api/listContent/${listId}`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-        const contents = await response.json();
-        console.log(contents);
-        setListContents(contents);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchListContent();
-  }, [listId]);
+  const { listContents, handleDeleteClick } = useFetchContents({ listId });
+  const [selectedContent, setSelectedContent] = useState(null);
 
   return (
     <Disclosure>
@@ -51,9 +34,25 @@ export default function ListDropDown({ listName, listId }) {
                   <button className="mx-2">
                     <FontAwesomeIcon icon={faFileLines} size="lg" />
                   </button>
-                  <button className="mx-2">
-                    <FontAwesomeIcon icon={faTrashCan} size="lg" />
-                  </button>
+                  {!selectedContent ? (
+                    <button
+                      className="mx-2"
+                      onClick={() => setSelectedContent(content.listContentId)}>
+                      <FontAwesomeIcon icon={faTrashCan} size="lg" />
+                    </button>
+                  ) : (
+                    <>
+                      <button onClick={() => setSelectedContent(null)}>
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleDeleteClick(selectedContent, setSelectedContent)
+                        }>
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </div>
               );
             })}
