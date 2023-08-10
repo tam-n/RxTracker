@@ -15,6 +15,7 @@ function App() {
   const [error, setError] = useState(null);
   const [lists, setLists] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [listContents, setListContents] = useState({});
 
   useEffect(() => {
     async function fetchLists() {
@@ -41,6 +42,8 @@ function App() {
     setLists,
     isOpen,
     setIsOpen,
+    listContents,
+    setListContents,
   };
   console.log(selected);
 

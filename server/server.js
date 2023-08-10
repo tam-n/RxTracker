@@ -110,7 +110,7 @@ app.get('/api/listContent/:listId', async (req, res, next) => {
     `;
     const params = [listId];
     const result = await db.query(sql, params);
-    console.log(result.rows);
+
     res.status(201).json(result.rows);
   } catch (err) {
     next(err);
@@ -268,47 +268,38 @@ app.put('/api/lists/:listId', async (req, res, next) => {
 });
 
 // Delete a medication from list
-app.delete(
-  '/api/listContent/:listContentId',
-  authorizationMiddleware,
-  async (req, res, next) => {
-    try {
-      const listContentId = Number(req.params.listContentId);
-      if (!Number.isInteger(listContentId) || !listContentId < 1) {
-        throw new ClientError(400, 'listContentId must be a positive integer');
-      }
+app.delete('/api/listContent', async (req, res, next) => {
+  try {
+    const { listContentId, listId } = req.body;
+    if (!listId) {
+      throw new ClientError(400, 'listId is a required field');
+    }
 
-      const { listId } = req.body;
-      if (!listId) {
-        throw new ClientError(400, 'listId is a required field');
-      }
-
-      const sql = `
+    const sql = `
       DELETE from "listContent"
         WHERE "listContentId" = $1 AND "listId" = $2
         RETURNING *;
     `;
 
-      const params = [listContentId, listId];
-      const result = await db.query(sql, params);
-      const [deleted] = result.rows;
-      if (!deleted) {
-        throw new ClientError(
-          404,
-          `List content with id ${listContentId} not found`
-        );
-      }
-      res.sendStatus(204);
-    } catch (err) {
-      next(err);
+    const params = [listContentId, listId];
+    const result = await db.query(sql, params);
+    const [deleted] = result.rows;
+    if (!deleted) {
+      throw new ClientError(
+        404,
+        `List content with id ${listContentId} not found`
+      );
     }
+    res.status(200).json(deleted);
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 // Delete a list
 app.delete(
-  '/api/list/:listId',
   authorizationMiddleware,
+  '/api/list/:listId',
   async (req, res, next) => {
     try {
       const listId = Number(req.params.listId);
@@ -317,16 +308,17 @@ app.delete(
       }
       const sql = `
       Delete from "lists"
-        where "listId" = $1 AND "userId" = $2
+        where "listId" = $1
         returning *;
     `;
-      const params = [listId, req.user.userId];
+      const params = [listId];
       const result = await db.query(sql, params);
       const [deleted] = result.rows;
       if (!deleted) {
         throw new ClientError(404, `list with id ${listId} not found`);
       }
-      res.sendStatus(204);
+
+      res.status(200).json(deleted);
     } catch (err) {
       next(err);
     }

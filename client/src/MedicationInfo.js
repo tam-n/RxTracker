@@ -43,9 +43,6 @@ export default function MedicationInfo() {
         throw new Error(`Failed to fetch: ${response.status}`);
       }
 
-      const entry = await response.json();
-      console.log('New entry added:', entry);
-
       setDosage('');
       setRoute('');
       setFrequency('');
@@ -107,7 +104,7 @@ export default function MedicationInfo() {
       <div className="text-2xl text-merriweather px-10 py-3">
         Used for
         <div className="text-opensans text-base p-3">
-          {selected.purpose && selected.indications_and_usage}
+          {selected.purpose || selected.indications_and_usage}
         </div>
       </div>
       <div className="text-2xl text-merriweather px-10 py-3">

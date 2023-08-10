@@ -1,25 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import useFetchContents from './UseFetchContents';
 
 export default function ListTable({ listId }) {
-  const [listContents, setListContents] = useState([]);
   const [editedCell, setEditedCell] = useState({ row: null, column: null });
   const [editedValue, setEditedValue] = useState('');
-
-  useEffect(() => {
-    async function fetchListContent() {
-      try {
-        const response = await fetch(`/api/listContent/${listId}`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-        const contents = await response.json();
-        setListContents(contents);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchListContent();
-  }, [listId]);
+  const [selectedContent, setSelectedContent] = useState(null);
+  const { listContents, handleDeleteClick } = useFetchContents({ listId });
 
   const handleEditClick = (row, column, value) => {
     setEditedCell({ row, column });
@@ -34,20 +22,20 @@ export default function ListTable({ listId }) {
     try {
       const updatedContents = [...listContents];
       updatedContents[row][column] = editedValue;
-      const selectedRow = updatedContents[row];
+      const editedRow = updatedContents[row];
 
       const body = {
-        medicationId: selectedRow.medicationId,
-        genericName: selectedRow.genericName,
-        dosage: selectedRow.dosage,
-        route: selectedRow.route,
-        frequency: selectedRow.frequency,
-        listContentId: selectedRow.listContentId,
-        listId: selectedRow.listId,
+        medicationId: editedRow.medicationId,
+        genericName: editedRow.genericName,
+        dosage: editedRow.dosage,
+        route: editedRow.route,
+        frequency: editedRow.frequency,
+        listContentId: editedRow.listContentId,
+        listId: editedRow.listId,
       };
 
       const response = await fetch(
-        `/api/listContent/${selectedRow.listContentId}`,
+        `/api/listContent/${editedRow.listContentId}`,
         {
           method: 'PUT',
           headers: {
@@ -195,6 +183,31 @@ export default function ListTable({ listId }) {
                         />
                       ) : (
                         content.frequency
+                      )}
+                    </td>
+                    <td>
+                      {!selectedContent ? (
+                        <button
+                          onClick={() =>
+                            setSelectedContent(content.listContentId)
+                          }>
+                          <FontAwesomeIcon icon={faTrashCan} className="ml-5" />
+                        </button>
+                      ) : (
+                        <span>
+                          <button
+                            onClick={() =>
+                              handleDeleteClick(
+                                selectedContent,
+                                setSelectedContent
+                              )
+                            }>
+                            Delete
+                          </button>
+                          <button onClick={() => setSelectedContent(null)}>
+                            Cancel
+                          </button>
+                        </span>
                       )}
                     </td>
                   </tr>

@@ -38,6 +38,13 @@ CREATE TABLE "lists" (
   OIDS=FALSE
 );
 
-ALTER TABLE "listContent" ADD CONSTRAINT "listContent_fk0" FOREIGN KEY ("listId") REFERENCES "lists"("listId");
+ALTER TABLE "listContent"
+ADD CONSTRAINT "listContent_fk0"
+FOREIGN KEY ("listId")
+REFERENCES "lists"("listId")
+ON DELETE CASCADE;
 
-ALTER TABLE "lists" ADD CONSTRAINT "lists_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
+ALTER TABLE "lists"
+ADD CONSTRAINT "lists_fk0"
+FOREIGN KEY ("userId") REFERENCES
+"users"("userId");
