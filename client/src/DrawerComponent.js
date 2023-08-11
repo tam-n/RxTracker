@@ -35,8 +35,9 @@ export default function DrawerComponent() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
           },
-          body: JSON.stringify({ name: inputValue, userId: 1 }),
+          body: JSON.stringify({ name: inputValue }),
         });
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status}`);

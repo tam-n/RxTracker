@@ -35,6 +35,7 @@ export default function MedicationInfo() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
         body: JSON.stringify(medicationInfo),
       });

@@ -7,6 +7,8 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import DrawerComponent from './DrawerComponent';
 import ListPage from './Pages/ListPage';
+import SignInPage from './SignInPage';
+import SignupPage from './SignupPage';
 
 export const DataContext = React.createContext();
 
@@ -16,11 +18,24 @@ function App() {
   const [lists, setLists] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [listContents, setListContents] = useState({});
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
+    if (signedIn === false) {
+      sessionStorage.removeItem('token');
+      return;
+    }
+
     async function fetchLists() {
+      const req = {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      };
+
       try {
-        const response = await fetch('/api/lists');
+        const response = await fetch('/api/lists', req);
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status}`);
         }
@@ -31,7 +46,7 @@ function App() {
       }
     }
     fetchLists();
-  }, []);
+  }, [signedIn, lists]);
 
   const data = {
     selected,
@@ -62,6 +77,13 @@ function App() {
             <Route path="/" element={<SearchPage />} />
             <Route path="info" element={<InfoPage />} />
             <Route path="mylist" element={<ListPage />} />
+            <Route path="signup" element={<SignupPage />} />
+            <Route
+              path="signin"
+              element={
+                <SignInPage signedIn={signedIn} setSignedIn={setSignedIn} />
+              }
+            />
           </Routes>
         </div>
       </DataContext.Provider>

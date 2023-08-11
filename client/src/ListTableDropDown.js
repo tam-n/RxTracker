@@ -34,6 +34,7 @@ export default function ListTableDropDown({ listName, listId }) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
         body: JSON.stringify(body),
       });
@@ -71,7 +72,9 @@ export default function ListTableDropDown({ listName, listId }) {
           </button>
           {isEditing ? (
             <>
-              <button onClick={handleSaveClick}>Save</button>
+              <button className="mx-3" onClick={handleSaveClick}>
+                Save
+              </button>
               <button onClick={handleCancelClick}>Cancel</button>
             </>
           ) : null}

@@ -6,7 +6,14 @@ const useFetchContents = ({ listId }) => {
   useEffect(() => {
     async function fetchListContent() {
       try {
-        const response = await fetch(`/api/listContent/${listId}`);
+        const req = {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        };
+
+        const response = await fetch(`/api/listContent/${listId}`, req);
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status}`);
         }
@@ -21,7 +28,7 @@ const useFetchContents = ({ listId }) => {
 
   const handleDeleteClick = async (selectedContent, setSelectedContent) => {
     try {
-      const body = {
+      const req = {
         listContentId: selectedContent,
         listId,
       };
@@ -29,8 +36,9 @@ const useFetchContents = ({ listId }) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify(req),
       });
 
       if (!response.ok) {
