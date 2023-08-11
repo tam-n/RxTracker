@@ -9,9 +9,14 @@ export default function Modal({ isOpen, closeModal, openModal, listId }) {
   const handleDeleteClick = async () => {
     closeModal();
     try {
-      const response = await fetch(`/api/list/${listId}`, {
+      const req = {
         method: 'DELETE',
-      });
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      };
+
+      const response = await fetch(`/api/list/${listId}`, req);
 
       if (!response.ok) {
         throw new Error(`Failed to delete list: ${response.status}`);

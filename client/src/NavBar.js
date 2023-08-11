@@ -40,8 +40,8 @@ export default function Navbar({ fixed }) {
                 </Link>
               </li>
               <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
-                <Link to="">
-                  <span className="ml-2 text-base">Login</span>
+                <Link to="/signup">
+                  <span className="ml-2 text-base">Sign Up</span>
                 </Link>
               </li>
             </ul>

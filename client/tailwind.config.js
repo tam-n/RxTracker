@@ -8,6 +8,7 @@ module.exports = {
       'willow-gray': '#C8D5BB',
       'minato-village-gray': '#80989B',
       white: '#FFFFFF',
+      red: '#FF0000',
     },
     screens: {
       sm: '640px',

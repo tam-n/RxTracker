@@ -194,7 +194,7 @@ export default function ListTable({ listId }) {
                           <FontAwesomeIcon icon={faTrashCan} className="ml-5" />
                         </button>
                       ) : (
-                        <span>
+                        <span className="flex justify-between">
                           <button
                             onClick={() =>
                               handleDeleteClick(
