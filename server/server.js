@@ -227,8 +227,7 @@ app.put(
             "dosage" = $3,
             "route" = $4,
             "frequency" = $5
-        JOIN "lists" USING ("listId")
-        WHERE "listContentId" = $6 AND "listId" = $7 AND "userId" = $8
+        WHERE "listContentId" = $6 AND "listId" = $7
         RETURNING *;
     `;
       const params = [
@@ -239,7 +238,6 @@ app.put(
         frequency,
         listContentId,
         listId,
-        req.user.userId,
       ];
       const result = await db.query(sql, params);
       const [listContent] = result.rows;
