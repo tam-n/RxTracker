@@ -58,49 +58,51 @@ export default function MedicationInfo() {
         <span className="text-3xl text-merriweather">
           {selected.openfda.generic_name[0].toLowerCase()}
         </span>
-        <form onSubmit={handleSubmit}>
-          <span className="text-opensans justify-end flex items-center text-sm">
-            <input
-              className="rounded-md p-1 w-20 mx-1"
-              placeholder="Dosage..."
-              value={dosage}
-              onChange={(e) => setDosage(e.target.value)}
-            />
-            <select
-              className="rounded-md p-1 w-20 mx-1"
-              value={route}
-              onChange={(e) => setRoute(e.target.value)}>
-              <option value="" disabled hidden>
-                Route
-              </option>
-              {selected.openfda.route.map((route) => (
-                <option key={route}>{route}</option>
-              ))}
-            </select>
-            <input
-              placeholder="Frequency"
-              className="rounded-md p-1 w-20 mx-1"
-              value={frequency}
-              onChange={(e) => setFrequency(e.target.value)}
-            />
-            <select
-              className="rounded-md p-1 w-20 mx-1"
-              value={selectedList}
-              onChange={(e) => setSelectedList(e.target.value)}>
-              <option value="" disabled hidden>
-                List
-              </option>
-              {data.lists.map((list) => (
-                <option key={list.listId} value={list.listId}>
-                  {list.name}
+        {data.signedIn ? (
+          <form onSubmit={handleSubmit}>
+            <span className="text-opensans justify-end flex items-center text-sm">
+              <input
+                className="rounded-md p-1 w-20 mx-1"
+                placeholder="Dosage..."
+                value={dosage}
+                onChange={(e) => setDosage(e.target.value)}
+              />
+              <select
+                className="rounded-md p-1 w-20 mx-1"
+                value={route}
+                onChange={(e) => setRoute(e.target.value)}>
+                <option value="" disabled hidden>
+                  Route
                 </option>
-              ))}
-            </select>
-            <button type="submit">
-              <FontAwesomeIcon icon={faSquarePlus} size="2xl" />
-            </button>
-          </span>
-        </form>
+                {selected.openfda.route.map((route) => (
+                  <option key={route}>{route}</option>
+                ))}
+              </select>
+              <input
+                placeholder="Frequency"
+                className="rounded-md p-1 w-20 mx-1"
+                value={frequency}
+                onChange={(e) => setFrequency(e.target.value)}
+              />
+              <select
+                className="rounded-md p-1 w-20 mx-1"
+                value={selectedList}
+                onChange={(e) => setSelectedList(e.target.value)}>
+                <option value="" disabled hidden>
+                  List
+                </option>
+                {data.lists.map((list) => (
+                  <option key={list.listId} value={list.listId}>
+                    {list.name}
+                  </option>
+                ))}
+              </select>
+              <button type="submit">
+                <FontAwesomeIcon icon={faSquarePlus} size="2xl" />
+              </button>
+            </span>
+          </form>
+        ) : null}
       </div>
       <div className="text-2xl text-merriweather px-10 py-3">
         Used for
