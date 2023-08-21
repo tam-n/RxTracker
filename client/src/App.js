@@ -7,8 +7,8 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import DrawerComponent from './DrawerComponent';
 import ListPage from './Pages/ListPage';
-import SignInPage from './SignInPage';
-import SignupPage from './SignupPage';
+import SignInPage from './Pages/SignInPage';
+import SignupPage from './Pages/SignupPage';
 
 export const DataContext = React.createContext();
 
@@ -59,8 +59,9 @@ function App() {
     setIsOpen,
     listContents,
     setListContents,
+    signedIn,
+    setSignedIn,
   };
-  console.log(selected);
 
   if (error) {
     console.error('Fetch error:', error);

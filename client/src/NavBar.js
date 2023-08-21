@@ -4,9 +4,13 @@ import { faPills } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { Disclosure } from '@headlessui/react';
+import { DataContext } from './App';
+import { useContext } from 'react';
 
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const data = useContext(DataContext);
+
   return (
     <>
       <Disclosure
@@ -34,16 +38,37 @@ export default function Navbar({ fixed }) {
             }
             id="example-navbar-danger">
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto text-merriweather">
-              <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
-                <Link to="/mylist">
-                  <span className="ml-2 text-base">My Lists</span>
-                </Link>
-              </li>
-              <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
-                <Link to="/signup">
-                  <span className="ml-2 text-base">Sign Up</span>
-                </Link>
-              </li>
+              {data.signedIn === false ? null : (
+                <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
+                  <Link to="/mylist">
+                    <span className="ml-2 text-base">My Lists</span>
+                  </Link>
+                </li>
+              )}
+              {data.signedIn === false ? (
+                <>
+                  <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
+                    <Link to="/signup">
+                      <span className="ml-2 text-base">Sign Up</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
+                    <Link to="/signin">
+                      <span className="ml-2 text-base">Sign In</span>
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
+                  <Link to="/">
+                    <span
+                      className="ml-2 text-base"
+                      onClick={() => data.setSignedIn(false)}>
+                      Sign Out
+                    </span>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
