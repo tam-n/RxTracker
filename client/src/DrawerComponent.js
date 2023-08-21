@@ -76,7 +76,7 @@ export default function DrawerComponent() {
               <header className="p-4 font-bold text-lg text-merriweather">
                 Current Lists
               </header>
-              {!showInput && (
+              {!showInput && data.signedIn && (
                 <button className="w-6 m-5" onClick={handlePlusButtonClick}>
                   <FontAwesomeIcon icon={faSquarePlus} size="xl" />
                 </button>
@@ -94,17 +94,19 @@ export default function DrawerComponent() {
                 placeholder="Enter name of list"
               />
             )}
-            {data.lists
-              ? data.lists.map((list) => {
-                  return (
-                    <ListDropDown
-                      listName={list.name}
-                      listId={list.listId}
-                      key={list.listId}
-                    />
-                  );
-                })
-              : null}
+            {data.lists && data.signedIn ? (
+              data.lists.map((list) => {
+                return (
+                  <ListDropDown
+                    listName={list.name}
+                    listId={list.listId}
+                    key={list.listId}
+                  />
+                );
+              })
+            ) : (
+              <div className="flex justify-center">Please sign in.</div>
+            )}
           </article>
         </section>
         <section
