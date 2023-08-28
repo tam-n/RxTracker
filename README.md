@@ -1,6 +1,7 @@
 # final-project
 
 A full stack JavaScript solo project.
+https://rxtracker.tamnguyent.com/
 
 ## Getting Started
 
