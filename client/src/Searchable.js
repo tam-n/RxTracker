@@ -53,6 +53,11 @@ export default function Searchable() {
           className="border-none w-full h-full ml-3 text-xl focus:outline-0"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleSubmit();
+            }
+          }}
         />
         <button className="ml-2" type="button" onClick={handleSubmit}>
           Submit
