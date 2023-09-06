@@ -15,7 +15,7 @@ export default function Navbar({ fixed }) {
     <>
       <Disclosure
         as="nav"
-        className="fixed w-screen top-0 flex items-center justify-between px-2 py-3 bg-light-gray-cloud text-merriweather text-rust-gray">
+        className="fixed w-full top-0 flex items-center justify-between px-2 py-3 bg-light-gray-cloud text-merriweather text-rust-gray">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between layout-center">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link to="/">
@@ -38,10 +38,23 @@ export default function Navbar({ fixed }) {
             }
             id="example-navbar-danger">
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto text-merriweather">
+              <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
+                <Link to="/">
+                  <span
+                    className="ml-2 text-base"
+                    onClick={() => setNavbarOpen(!navbarOpen)}>
+                    Home
+                  </span>
+                </Link>
+              </li>
               {data.signedIn === false ? null : (
                 <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
                   <Link to="/mylist">
-                    <span className="ml-2 text-base">My Lists</span>
+                    <span
+                      className="ml-2 text-base"
+                      onClick={() => setNavbarOpen(!navbarOpen)}>
+                      My Lists
+                    </span>
                   </Link>
                 </li>
               )}
@@ -49,12 +62,20 @@ export default function Navbar({ fixed }) {
                 <>
                   <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
                     <Link to="/signup">
-                      <span className="ml-2 text-base">Sign Up</span>
+                      <span
+                        className="ml-2 text-base"
+                        onClick={() => setNavbarOpen(!navbarOpen)}>
+                        Sign Up
+                      </span>
                     </Link>
                   </li>
                   <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
                     <Link to="/signin">
-                      <span className="ml-2 text-base">Sign In</span>
+                      <span
+                        className="ml-2 text-base"
+                        onClick={() => setNavbarOpen(!navbarOpen)}>
+                        Sign In
+                      </span>
                     </Link>
                   </li>
                 </>
@@ -63,7 +84,10 @@ export default function Navbar({ fixed }) {
                   <Link to="/">
                     <span
                       className="ml-2 text-base"
-                      onClick={() => data.setSignedIn(false)}>
+                      onClick={() => {
+                        data.setSignedIn(false);
+                        setNavbarOpen(!navbarOpen);
+                      }}>
                       Sign Out
                     </span>
                   </Link>

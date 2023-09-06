@@ -7,17 +7,19 @@ export default function MyList() {
 
   return (
     <>
-      {data.lists
-        ? data.lists.map((list) => {
-            return (
-              <ListTableDropDown
-                key={list.listId}
-                listName={list.name}
-                listId={list.listId}
-              />
-            );
-          })
-        : null}
+      {data.lists.length > 0 ? (
+        data.lists.map((list) => {
+          return (
+            <ListTableDropDown
+              key={list.listId}
+              listName={list.name}
+              listId={list.listId}
+            />
+          );
+        })
+      ) : (
+        <div className="flex justify-center">You have no lists</div>
+      )}
     </>
   );
 }

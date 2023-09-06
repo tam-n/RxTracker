@@ -73,7 +73,7 @@ function App() {
       <DataContext.Provider value={data}>
         <NavBar />
         <DrawerComponent />
-        <div className="content">
+        <div className="content w-full">
           <Routes>
             <Route path="/" element={<SearchPage />} />
             <Route path="info" element={<InfoPage />} />

@@ -2,11 +2,6 @@
   box-sizing: border-box;
 }
 
-.layout-center {
-  margin: 0 auto;
-  width: 800px;
-}
-
 .app-name {
   font-size: 1.5rem;
   font-weight: 600;
@@ -40,4 +35,11 @@ h3 {
 
 .content {
   padding-top: 80px;
+}
+
+@media screen and (width >= 800px) {
+  .layout-center {
+    width: 800px;
+    margin: 0 auto;
+  }
 }
