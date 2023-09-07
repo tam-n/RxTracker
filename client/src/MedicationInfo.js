@@ -54,12 +54,12 @@ export default function MedicationInfo() {
   }
   return (
     <div className="bg-willow-gray layout-center text-rust-gray">
-      <div className="flex justify-between p-10">
+      <div className="justify-between p-10 md:flex">
         <span className="text-3xl text-merriweather">
           {selected.openfda.generic_name[0].toLowerCase()}
         </span>
         {data.signedIn ? (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="mt-5">
             <span className="text-opensans justify-end flex items-center text-sm">
               <input
                 className="rounded-md p-1 w-20 mx-1"
