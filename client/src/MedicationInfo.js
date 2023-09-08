@@ -119,13 +119,13 @@ export default function MedicationInfo() {
       <div className="text-2xl text-merriweather px-10 py-3">
         Directions for use
         <div className="text-opensans text-base p-3">
-          {selected.instructions_for_use}
+          {selected.dosage_and_administration || selected.instructions_for_use}
         </div>
       </div>
       <div className="text-2xl text-merriweather px-10 py-3">
         Important Safety Information
         <div className="text-opensans text-base p-3">
-          {selected.warnings_and_cautions}
+          {selected.warnings_and_cautions || selected.warnings}
         </div>
       </div>
     </div>
