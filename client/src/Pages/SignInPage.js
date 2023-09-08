@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function SignInPage({ signedIn, setSignedIn }) {
+export default function SignInPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -26,7 +26,6 @@ export default function SignInPage({ signedIn, setSignedIn }) {
       const { token } = await res.json();
 
       sessionStorage.setItem('token', token);
-      setSignedIn(true);
       navigate('/');
     } catch (err) {
       alert(`Error signing in: ${err}`);

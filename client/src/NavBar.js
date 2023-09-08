@@ -47,7 +47,7 @@ export default function Navbar({ fixed }) {
                   </span>
                 </Link>
               </li>
-              {data.signedIn === false ? null : (
+              {!data.authToken ? null : (
                 <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
                   <Link to="/mylist">
                     <span
@@ -58,7 +58,7 @@ export default function Navbar({ fixed }) {
                   </Link>
                 </li>
               )}
-              {data.signedIn === false ? (
+              {!data.authToken ? (
                 <>
                   <li className="nav-item px-3 py-2 flex items-center text-xs font-bold leading-snug hover:opacity-75">
                     <Link to="/signup">
@@ -85,7 +85,7 @@ export default function Navbar({ fixed }) {
                     <span
                       className="ml-2 text-base"
                       onClick={() => {
-                        data.setSignedIn(false);
+                        sessionStorage.removeItem('token');
                         setNavbarOpen(!navbarOpen);
                       }}>
                       Sign Out

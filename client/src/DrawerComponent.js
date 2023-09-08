@@ -76,7 +76,7 @@ export default function DrawerComponent() {
               <header className="p-4 font-bold text-lg text-merriweather">
                 Current Lists
               </header>
-              {!showInput && data.signedIn && (
+              {!showInput && data.authToken && (
                 <button className="w-6 m-5" onClick={handlePlusButtonClick}>
                   <FontAwesomeIcon icon={faSquarePlus} size="xl" />
                 </button>
@@ -94,7 +94,7 @@ export default function DrawerComponent() {
                 placeholder="Enter name of list"
               />
             )}
-            {data.lists && data.signedIn ? (
+            {data.lists && data.authToken ? (
               data.lists.map((list) => {
                 return (
                   <ListDropDown

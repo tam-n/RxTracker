@@ -58,7 +58,7 @@ export default function MedicationInfo() {
         <span className="text-3xl text-merriweather">
           {selected.openfda.generic_name[0].toLowerCase()}
         </span>
-        {data.signedIn ? (
+        {data.authToken ? (
           <form onSubmit={handleSubmit} className="mt-5">
             <span className="text-opensans justify-end flex items-center text-sm">
               <input

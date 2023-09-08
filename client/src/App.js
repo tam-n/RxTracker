@@ -18,35 +18,34 @@ function App() {
   const [lists, setLists] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [listContents, setListContents] = useState({});
-  const [signedIn, setSignedIn] = useState(false);
+
+  // During page load:
+  const authToken = sessionStorage.getItem('token');
 
   useEffect(() => {
-    if (signedIn === false) {
-      sessionStorage.removeItem('token');
-      return;
-    }
+    if (authToken) {
+      async function fetchLists() {
+        const req = {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        };
 
-    async function fetchLists() {
-      const req = {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-        },
-      };
-
-      try {
-        const response = await fetch('/api/lists', req);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
+        try {
+          const response = await fetch('/api/lists', req);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch: ${response.status}`);
+          }
+          const lists = await response.json();
+          setLists(lists);
+        } catch (error) {
+          setError(error);
         }
-        const lists = await response.json();
-        setLists(lists);
-      } catch (error) {
-        setError(error);
       }
+      fetchLists();
     }
-    fetchLists();
-  }, [signedIn, lists]);
+  }, [lists, authToken]);
 
   const data = {
     selected,
@@ -59,8 +58,7 @@ function App() {
     setIsOpen,
     listContents,
     setListContents,
-    signedIn,
-    setSignedIn,
+    authToken,
   };
 
   if (error) {
@@ -79,12 +77,7 @@ function App() {
             <Route path="info" element={<InfoPage />} />
             <Route path="mylist" element={<ListPage />} />
             <Route path="signup" element={<SignupPage />} />
-            <Route
-              path="signin"
-              element={
-                <SignInPage signedIn={signedIn} setSignedIn={setSignedIn} />
-              }
-            />
+            <Route path="signin" element={<SignInPage />} />
           </Routes>
         </div>
       </DataContext.Provider>
